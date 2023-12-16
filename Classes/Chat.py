@@ -10,7 +10,7 @@ class Chat:
     def __init__(self):
 
         self.address_book = AddressBook()
-
+        self.address_book.read_from_file()
         self.menu = """
             # - hello
             # - add <username> <phone>
@@ -75,3 +75,4 @@ class Chat:
                 break
             else:
                 print("Invalid command.")
+        self.address_book.save_to_file()

@@ -1,3 +1,4 @@
+import pickle
 from Classes.DecoInputError import input_error
 from Classes.Record import Record
 from collections import UserDict
@@ -10,6 +11,7 @@ from collections import defaultdict
 class AddressBook(UserDict):
     def __init__(self):
         self.data = dict()
+        self.filename = "data.bob"
 
     @input_error
     def add_record(self, record: Record):
@@ -81,3 +83,12 @@ class AddressBook(UserDict):
         # Виводимо результат
         for day, names in birthdays_by_day.items():
             print(f"{day}: {', '.join(names)}")
+
+    def save_to_file(self):
+        with open(self.filename, "wb") as file:
+            pickle.dump(self, file)
+
+    def read_from_file(self):
+        with open(self.filename, "rb") as file:
+            self.data = pickle.load(file)
+        return self.data
