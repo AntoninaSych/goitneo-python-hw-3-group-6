@@ -3,4 +3,6 @@ from Classes.Field import Field
 
 class Name(Field):
     name = Field
-    pass
+
+    def __str__(self):
+        return str(self.value)

@@ -11,5 +11,8 @@ def input_error(func):
         except IndexError:
             print("Please  check your input.")
             return "Please  check your input."
+        except KeyboardInterrupt:
+            print("Please  check your input.")
+            return "Please  check your input."
 
     return inner

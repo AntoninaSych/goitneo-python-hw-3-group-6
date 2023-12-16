@@ -65,11 +65,9 @@ class Chat:
                     record = Record(args[0])
                 record.add_birthday(args[1])
                 self.address_book.add_record(record)
-
             elif command_name == "show-birthday":
                 record = self.address_book.find(args[0])
                 print(record.birthday)
-
             elif command_name == "birthdays":
                 self.address_book.get_birthdays_per_week()
             elif command_name in ["close", "exit"]:
