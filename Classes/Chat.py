@@ -2,8 +2,10 @@ from datetime import datetime
 import collections
 from Classes.AddressBook import AddressBook
 from Classes.Record import Record
+from Classes.DecoInputError import input_error
 
 
+@input_error
 class Chat:
     def __init__(self):
 
@@ -26,11 +28,13 @@ class Chat:
     def __str__(self):
         print(self.address_book)
 
+    @input_error
     def parse_input(self, user_input):
         cmd, *args = user_input.split()
         cmd = cmd.strip().lower()
         return cmd, args
 
+    @input_error
     def main(self):
         print(self.menu)
 
@@ -63,9 +67,11 @@ class Chat:
                 self.address_book.add_record(record)
 
             elif command_name == "show-birthday":
-                pass
+                record = self.address_book.find(args[0])
+                print(record.birthday)
+
             elif command_name == "birthdays":
-                pass
+                self.address_book.get_birthdays_per_week()
             elif command_name in ["close", "exit"]:
                 print("Good bye!")
                 break

@@ -6,8 +6,8 @@ from datetime import datetime
 class Birthday:
     def __init__(self, birthday):
         self.birthday = None
-        self.validate_birthday(birthday)
-        if not self.validate_birthday(birthday):
+
+        if birthday != None and not self.validate_birthday(birthday):
             raise ValueError(
                 "Invalid birthday format. It should have in format DD.MM.YYYY."
             )
@@ -22,4 +22,8 @@ class Birthday:
             return False
 
     def __str__(self):
-        return self.birthday
+        return (
+            self.birthday.strftime("%d.%m.%Y")
+            if self.birthday != None
+            else "Not defined"
+        )

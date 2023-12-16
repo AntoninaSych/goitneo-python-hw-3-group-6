@@ -8,7 +8,7 @@ class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = list()
-        self.birthday = None
+        self.birthday = Birthday()
 
     def add_phone(self, number):
         if Phone.validate_phone_number(number):
@@ -31,8 +31,7 @@ class Record:
 
     @input_error
     def add_birthday(self, birthday: Birthday):
-        birthday = Birthday(birthday)
-        self.birthday = birthday
+        self.birthday = Birthday(birthday)
 
     def __str__(self):
         phone_numbers = ", ".join(str(phone) for phone in self.phones)
