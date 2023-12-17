@@ -11,7 +11,7 @@ from collections import defaultdict
 class AddressBook(UserDict):
     def __init__(self):
         self.data = dict()
-        self.filename = "data.bob"
+        self.filename = "AddressBookData.bob"
 
     @input_error
     def add_record(self, record: Record):
@@ -34,7 +34,9 @@ class AddressBook(UserDict):
             print(record)
 
     def get_birthdays_per_week(self):
-
+        check = [i for i in self.data.values() if i.birthday.birthday != None]
+        if len(check) == 0:
+            return "You havee no contacts with birthday in your list"
         birthdays_by_day = defaultdict(list)
         # Отримуємо поточну дату
         today = datetime.today().date()
@@ -46,6 +48,8 @@ class AddressBook(UserDict):
 
         # Перебираємо користувачів і аналізуємо їх дати народження
         for record in self.data.values():
+            if record.birthday.birthday == None:
+                continue
             birthday = record.birthday.birthday
             user_name = record.name.value
 
@@ -79,7 +83,8 @@ class AddressBook(UserDict):
 
             # Додаємо ім'я іменинника до відповідного дня тижня
             birthdays_by_day[day_name].append(user_name)
-
+        if len(birthdays_by_day) == 0:
+            print("Theree is no birthdays this week")
         # Виводимо результат
         for day, names in birthdays_by_day.items():
             print(f"{day}: {', '.join(names)}")
@@ -89,6 +94,9 @@ class AddressBook(UserDict):
             pickle.dump(self, file)
 
     def read_from_file(self):
-        with open(self.filename, "rb") as file:
-            self.data = pickle.load(file)
-        return self.data
+        try:
+            with open(self.filename, "rb") as file:
+                self.data = pickle.load(file)
+            return self.data
+        except (OSError, IOError) as e:
+            pass

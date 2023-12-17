@@ -2,17 +2,11 @@ def input_error(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except ValueError:
-            print("Invalid input. Please provide valid data.")
-            return "Invalid input. Please provide valid data."
+        except ValueError as e:
+            print(str(e))
         except KeyError:
             print("User not exist. Please provide valid data.")
-            return "User not exist. Please provide valid data."
         except IndexError:
             print("Please  check your input.")
-            return "Please  check your input."
-        except KeyboardInterrupt:
-            print("Please  check your input.")
-            return "Please  check your input."
 
     return inner

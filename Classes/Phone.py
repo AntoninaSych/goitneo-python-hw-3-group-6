@@ -9,7 +9,7 @@ class Phone:
 
     @staticmethod
     def validate_phone_number(number):
-        return True  ##len(number) == 10 and number.isdigit()
+        return len(number) == 10 and number.isdigit()
 
     def __str__(self):
         return self.number

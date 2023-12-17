@@ -11,6 +11,7 @@ class Chat:
 
         self.address_book = AddressBook()
         self.address_book.read_from_file()
+
         self.menu = """
             # - hello
             # - add <username> <phone>
@@ -22,7 +23,6 @@ class Chat:
             # - birthdays: Показати дні народження, які від
             # - "close", "exit"
         """
-        self.filename = "contacts.txt"
         self.main()
 
     def __str__(self):
@@ -37,7 +37,6 @@ class Chat:
     @input_error
     def main(self):
         print(self.menu)
-
         while True:
             command = input("Enter command: ").strip()
             command_name, args = self.parse_input(command)
@@ -49,10 +48,16 @@ class Chat:
                     record = self.address_book.find(args[0])
                 except KeyError:
                     record = Record(args[0])
+                if len(args) == 1:
+                    print("Please provide phone")
+                    continue
                 record.add_phone(args[1])
                 self.address_book.add_record(record)
             elif command_name.startswith("change"):
                 record = self.address_book.find(args[0])
+                if len(args) == 1:
+                    print("Please provide phone")
+                    continue
                 record.edit_phone(record.phones[0], args[1])
             elif command_name.startswith("phone"):
                 print(self.address_book.find(args[0]))
@@ -63,6 +68,9 @@ class Chat:
                     record = self.address_book.find(args[0])
                 except KeyError:
                     record = Record(args[0])
+                if len(args) == 1:
+                    print("Please provide birthday")
+                    continue
                 record.add_birthday(args[1])
                 self.address_book.add_record(record)
             elif command_name == "show-birthday":
@@ -75,4 +83,5 @@ class Chat:
                 break
             else:
                 print("Invalid command.")
+
         self.address_book.save_to_file()
