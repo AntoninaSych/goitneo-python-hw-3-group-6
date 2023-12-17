@@ -35,4 +35,6 @@ class Record:
 
     def __str__(self):
         phone_numbers = ", ".join(str(phone) for phone in self.phones)
+        if len(phone_numbers) == 0:
+            phone_numbers = "Not defined"
         return f"Contact name: {self.name.value}, phones: {phone_numbers}, birthday: {self.birthday}"

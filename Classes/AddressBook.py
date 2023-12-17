@@ -36,7 +36,7 @@ class AddressBook(UserDict):
     def get_birthdays_per_week(self):
         check = [i for i in self.data.values() if i.birthday.birthday != None]
         if len(check) == 0:
-            return "You havee no contacts with birthday in your list"
+            return "You have no contacts with birthday in your list"
         birthdays_by_day = defaultdict(list)
         # Отримуємо поточну дату
         today = datetime.today().date()
@@ -84,7 +84,7 @@ class AddressBook(UserDict):
             # Додаємо ім'я іменинника до відповідного дня тижня
             birthdays_by_day[day_name].append(user_name)
         if len(birthdays_by_day) == 0:
-            print("Theree is no birthdays this week")
+            print("There is no birthdays this week")
         # Виводимо результат
         for day, names in birthdays_by_day.items():
             print(f"{day}: {', '.join(names)}")
