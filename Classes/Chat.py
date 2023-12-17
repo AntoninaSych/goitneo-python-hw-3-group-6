@@ -37,51 +37,63 @@ class Chat:
     @input_error
     def main(self):
         print(self.menu)
+
         while True:
-            command = input("Enter command: ").strip()
-            command_name, args = self.parse_input(command)
-
-            if command_name.lower() == "hello":
-                print("How can I help you?")
-            elif command_name == "add":
-                try:
+            try:
+                command = input("Enter command: ").strip()
+                command_name, args = self.parse_input(command)
+                # -----  Hello  command
+                if command_name.lower() == "hello":
+                    print("How can I help you?")
+                # ----- Add  command
+                elif command_name == "add":
+                    try:
+                        record = self.address_book.find(args[0])
+                    except KeyError:
+                        record = Record(args[0])
+                    if len(args) == 1:
+                        print("Please provide phone")
+                        continue
+                    record.add_phone(args[1])
+                    self.address_book.add_record(record)
+                # ----- Change  command
+                elif command_name.startswith("change"):
                     record = self.address_book.find(args[0])
-                except KeyError:
-                    record = Record(args[0])
-                if len(args) == 1:
-                    print("Please provide phone")
-                    continue
-                record.add_phone(args[1])
-                self.address_book.add_record(record)
-            elif command_name.startswith("change"):
-                record = self.address_book.find(args[0])
-                if len(args) == 1:
-                    print("Please provide phone")
-                    continue
-                record.edit_phone(record.phones[0], args[1])
-            elif command_name.startswith("phone"):
-                print(self.address_book.find(args[0]))
-            elif command_name == "all":
-                self.address_book.all()
-            elif command_name == "add-birthday":
-                try:
+                    if len(args) == 1:
+                        print("Phone can't be empty")
+                        continue
+                    record.edit_phone(record.phones[0], args[1])
+                # ----- Phone  command
+                elif command_name.startswith("phone"):
+                    print(self.address_book.find(args[0]))
+                # ----- All  command
+                elif command_name == "all":
+                    self.address_book.all()
+                # ----- Add Birthday  command
+                elif command_name == "add-birthday":
+                    try:
+                        record = self.address_book.find(args[0])
+                    except KeyError:
+                        record = Record(args[0])
+                    if len(args) == 1:
+                        print("Please provide birthday")
+                        continue
+                    record.add_birthday(args[1])
+                    self.address_book.add_record(record)
+                # ----- Show Birthday  command
+                elif command_name == "show-birthday":
                     record = self.address_book.find(args[0])
-                except KeyError:
-                    record = Record(args[0])
-                if len(args) == 1:
-                    print("Please provide birthday")
-                    continue
-                record.add_birthday(args[1])
-                self.address_book.add_record(record)
-            elif command_name == "show-birthday":
-                record = self.address_book.find(args[0])
-                print(record.birthday)
-            elif command_name == "birthdays":
-                self.address_book.get_birthdays_per_week()
-            elif command_name in ["close", "exit"]:
-                print("Good bye!")
-                break
-            else:
-                print("Invalid command.")
-
-        self.address_book.save_to_file()
+                    print(record.birthday)
+                # ----- Birthdays  command
+                elif command_name == "birthdays":
+                    self.address_book.get_birthdays_per_week()
+                # ----- Exit  command
+                elif command_name in ["close", "exit"]:
+                    print("Good bye!")
+                    break
+                else:
+                    print("Invalid command.")
+            except:
+                pass
+            finally:
+                self.address_book.save_to_file()

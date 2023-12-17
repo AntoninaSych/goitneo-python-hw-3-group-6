@@ -4,8 +4,8 @@ def input_error(func):
             return func(*args, **kwargs)
         except ValueError as e:
             print(str(e))
-        except KeyError:
-            print("User not exist. Please provide valid data.")
+        except KeyError as e:
+            print("User not found. Please provide valid data.")
         except IndexError:
             print("Please  check your input.")
 

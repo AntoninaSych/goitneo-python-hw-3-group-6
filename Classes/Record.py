@@ -27,7 +27,7 @@ class Record:
         for phone in self.phones:
             if str(phone) == search_phone:
                 return phone
-        return None
+        raise ValueError("Phone not found")
 
     @input_error
     def add_birthday(self, birthday: Birthday):
